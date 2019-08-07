@@ -11,6 +11,6 @@
   "dependencies": {
     "express": "^4.17.1",
     "prom-client": "^11.5.3",
-    "teslajs": "https://github.com/geekdave/TeslaJS.git"
+    "geekdave-teslajs": "4.3.11"
   }
 }
