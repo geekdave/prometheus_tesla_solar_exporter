@@ -1,11 +1,13 @@
-var tjs = require("teslajs");
+var tjs = require("geekdave-teslajs");
 
 var username = process.env.TESLA_ACCOUNT_USERNAME;
 var password = process.env.TESLA_ACCOUNT_PASSWORD;
 
 if (!username || !password) {
-    console.log("Please set the TESLA_ACCOUNT_USERNAME and TESLA_ACCOUNT_PASSWORD environment variables.  Exiting...");
-    process.exit(1);
+  console.log(
+    "Please set the TESLA_ACCOUNT_USERNAME and TESLA_ACCOUNT_PASSWORD environment variables.  Exiting..."
+  );
+  process.exit(1);
 }
 
 var token = "";
