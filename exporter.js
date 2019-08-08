@@ -1,7 +1,8 @@
-var tjs = require("geekdave-teslajs");
+var tjs = require("geekdave-teslajs-fork");
 
 var username = process.env.TESLA_ACCOUNT_USERNAME;
 var password = process.env.TESLA_ACCOUNT_PASSWORD;
+var siteId = process.env.TESLA_SITE_ID;
 
 if (!username || !password) {
   console.log(
@@ -128,7 +129,8 @@ const loginAndGetStatus = async token => {
   return new Promise(function(resolve, reject) {
     tjs.solarStatusAsync(
       {
-        authToken: token
+        authToken: token,
+        siteId: siteId
       },
       function(error, response, body) {
         if (error) {
