@@ -2,7 +2,6 @@ var tjs = require("geekdave-teslajs-fork");
 
 var username = process.env.TESLA_ACCOUNT_USERNAME;
 var password = process.env.TESLA_ACCOUNT_PASSWORD;
-var siteId = process.env.TESLA_SITE_ID;
 
 if (!username || !password) {
   console.log(
@@ -86,6 +85,22 @@ const login = async (username, password) => {
   });
 };
 
+const getSolarProductId = async (token) => {
+  return new Promise(function(resolve, reject) {
+    tjs.products({
+      authToken: token
+    }, function(err, response) {
+      if (response.error) {
+        console.log(JSON.stringify(response.error));
+        reject(error);
+      } else {
+
+        resolve(response);
+      }
+    });
+  });
+};
+
 const sleep = milliseconds => {
   return new Promise(resolve => setTimeout(resolve, milliseconds));
 };
@@ -108,8 +123,12 @@ const getStatus = async () => {
         }
       }
 
+      var response = await getSolarProductId(token);
+      const siteId = response[0].energy_site_id;
+      console.log("got siteId: " + siteId);
+
       try {
-        var status = await loginAndGetStatus(token);
+        var status = await getSolarStatus(token, siteId);
         resolve(status);
         break;
       } catch (e) {
@@ -125,7 +144,7 @@ const getStatus = async () => {
   });
 };
 
-const loginAndGetStatus = async token => {
+const getSolarStatus = async (token, siteId) => {
   return new Promise(function(resolve, reject) {
     tjs.solarStatusAsync(
       {
